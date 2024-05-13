@@ -26,7 +26,6 @@ const insertEmployeeSchema = Joi.array().items({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
   department: Joi.string().required(),
-  user_type: Joi.string().required(),
   salary: Joi.number().required(),
 }).single()
 

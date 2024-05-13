@@ -90,8 +90,10 @@ exports.logOut = async (req, res, next) => {
 
 exports.insertEmployees = async (req, res, next) => {
   try {
-    console.log(req)
     const employees = req.body
+    employees.forEach(elm => {
+      return elm.user_type = 'EMPLOYEE'
+    })
     await usersServiceProvider.insertUsers(employees)
 
     return res.status(200).json({

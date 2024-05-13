@@ -1,14 +1,18 @@
-const { Sequelize } = require('sequelize')
+// const { Sequelize } = require('sequelize')
+const { Sequelize } = require("sequelize-cockroachdb");
+
 require('dotenv').config()
 
 const sequelize = new Sequelize(
-  process.env.DB_DATABASE,
-  process.env.DB_USERNAME,
-  process.env.DB_PASSWORD, 
-  {
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT
-  }
+  process.env.DATABASE_URL,
+
+  // process.env.DB_DATABASE,
+  // process.env.DB_USERNAME,
+  // process.env.DB_PASSWORD, 
+  // {
+  //   host: process.env.DB_HOST,
+  //   dialect: process.env.DB_DIALECT
+  // }
 )
 
 sequelize.authenticate()
@@ -20,3 +24,16 @@ sequelize.authenticate()
   })
 
 module.exports = sequelize
+
+// const sequelize = new Sequelize(process.env.DATABASE_URL);
+
+// (async () => {
+//   try {
+//     const [results, metadata] = await sequelize.query("SELECT NOW()");
+//     console.log(results);
+//   } catch (err) {
+//     console.error("error executing query:", err);
+//   } finally {
+//     await sequelize.close();
+//   }
+// })();
