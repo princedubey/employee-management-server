@@ -5,6 +5,7 @@ const routes = require('./src/router/users-route')
 const sequelize = require('./src/database/connection')
 const errorHandler = require('./src/middleware/error-handler')
 const rateLimit = require("express-rate-limit")
+const cors = require('cors')
 
 require('dotenv').config()
 const app = express()
@@ -17,8 +18,9 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again later"
 })
 
-app.use(limiter)
+app.use(cors())
 app.use(bodyParser.json())
+app.use(limiter)
 app.use(routes)
 app.use(errorHandler)
 
@@ -31,6 +33,7 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 3000
 
+sequelize.sync()
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
 })
