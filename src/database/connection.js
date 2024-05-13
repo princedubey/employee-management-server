@@ -4,15 +4,15 @@ const { Sequelize } = require("sequelize-cockroachdb");
 require('dotenv').config()
 
 const sequelize = new Sequelize(
-  process.env.DATABASE_URL,
+  // process.env.DATABASE_URL,
 
-  // process.env.DB_DATABASE,
-  // process.env.DB_USERNAME,
-  // process.env.DB_PASSWORD, 
-  // {
-  //   host: process.env.DB_HOST,
-  //   dialect: process.env.DB_DIALECT
-  // }
+  process.env.DB_DATABASE,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD, 
+  {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT
+  }
 )
 
 sequelize.authenticate()
