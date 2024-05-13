@@ -18,19 +18,20 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again later"
 })
 
-const corsConfig = {
-  origin: "*",
-  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-  preflightContinue: false,
-  optionsSuccessStatus: 204
-}
+// const corsConfig = {
+//   origin: "*",
+//   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+//   preflightContinue: false,
+//   optionsSuccessStatus: 204
+// }
 
-app.options("", cors(corsConfig))
-app.use(cors(corsConfig))
+// app.options("", cors(corsConfig))
+app.use(cors())
 app.use(bodyParser.json())
 app.use(limiter)
-app.use(routes)
+app.use("/", routes)
 app.use(errorHandler)
+
 
 app.get('/', (req, res) => {
   res.status(200).json({
@@ -39,9 +40,9 @@ app.get('/', (req, res) => {
   })
 })
 
-const PORT = process.env.PORT || 3000
-
 sequelize.sync()
+
+const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
 })

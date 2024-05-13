@@ -1,6 +1,4 @@
-// const { Sequelize } = require('sequelize')
-const { Sequelize } = require("sequelize-cockroachdb");
-
+const { Sequelize } = require('sequelize')
 require('dotenv').config()
 
 const sequelize = new Sequelize(
@@ -16,25 +14,11 @@ const sequelize = new Sequelize(
 )
 
 try {
-  sequelize.authenticate().then(() => {
-    console.log('Database connection has been established successfully.')
-  })
+  sequelize.authenticate()
+  console.log('Database connection has been established successfully.')
 } catch (error) {
   console.error('Unable to connect to the database:', error)
 }
 
 
 module.exports = sequelize
-
-// const sequelize = new Sequelize(process.env.DATABASE_URL);
-
-// (async () => {
-//   try {
-//     const [results, metadata] = await sequelize.query("SELECT NOW()");
-//     console.log(results);
-//   } catch (err) {
-//     console.error("error executing query:", err);
-//   } finally {
-//     await sequelize.close();
-//   }
-// })();

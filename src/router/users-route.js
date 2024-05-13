@@ -12,7 +12,7 @@ router.post('/signup',
   signUp
 )
 
-router.post('/login',
+router.post('/Admin-login',
   [
     schemaValidation(loginSchema)
   ],
