@@ -18,7 +18,14 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again later"
 })
 
-app.use(cors())
+const corsConfig = {
+  origin: "*",
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}
+
+app.use(cors(corsConfig))
 app.use(bodyParser.json())
 app.use(limiter)
 app.use(routes)
