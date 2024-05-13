@@ -22,6 +22,13 @@ app.use(bodyParser.json())
 app.use(routes)
 app.use(errorHandler)
 
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Welcome to Employee Management API'
+  })
+})
+
 const PORT = process.env.PORT || 3000
 
 sequelize.sync()
