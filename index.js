@@ -25,6 +25,7 @@ const corsConfig = {
   optionsSuccessStatus: 204
 }
 
+app.options("", cors(corsConfig))
 app.use(cors(corsConfig))
 app.use(bodyParser.json())
 app.use(limiter)
