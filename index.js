@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
   })
 })
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 3000
 
 sequelize.sync()
 app.listen(PORT, () => {
