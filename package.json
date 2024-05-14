@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "build":"npm i",
+    "build": "npm i",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +30,7 @@
     "mongodb": "^6.6.1",
     "morgan": "^1.10.0",
     "mysql2": "^3.9.7",
+    "nodemon": "^3.1.0",
     "sequelize": "^6.37.3",
     "sequelize-cockroachdb": "^6.0.5"
   }
