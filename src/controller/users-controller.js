@@ -65,6 +65,8 @@ exports.logIn = async (req, res, next) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '10m' });
     user.access_token = token
 
+    await usersServiceProvider.updateUser(user.id, {access_token: token})
+
     return res.status(200).json({
       success: true,
       message: 'User Logged in successfully.',
@@ -79,7 +81,8 @@ exports.logIn = async (req, res, next) => {
 exports.logOut = async (req, res, next) => {
   try {
     req.user.access_token = null
-        
+    await usersServiceProvider.updateUser(req.user.id, {access_token: null})
+
     return res.status(200).json({
       success: true,
       message: 'User logged out successfully.',
