@@ -36,6 +36,6 @@ exports.validateAccessToken = async (req, res, next) => {
 
     next()
   } catch (error) {
-    throw next(error)
+    next(error)
   }
 }

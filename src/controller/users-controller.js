@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const usersServiceProvider = require('../services/users-service-provider')
+const CsvParser = require('json2csv').Parser
 
 exports.signUp = async (req, res, next) => {
   try {
@@ -30,10 +31,11 @@ exports.signUp = async (req, res, next) => {
     }
 
     const userRegistered = await usersServiceProvider.signUp(newUser)
+    delete userRegistered.password
 
     return res.status(200).json({
       message: 'User registered successfully.',
-      date: userRegistered,
+      data: userRegistered
     })
 
   } catch (error) {
@@ -70,7 +72,7 @@ exports.logIn = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: 'User Logged in successfully.',
-      date: user,
+      data: user,
     })
 
   } catch (error) {
@@ -137,8 +139,40 @@ exports.getEmployees = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: 'Employees Fetched successfully.',
-      date: users,
+      data: users,
     })
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.exportCsvEmployees = async (req, res, next) => {
+  try {
+    const { query, skip, limit, sort, projection } = req.parsedFilterParams
+
+    const formattedUsers = []
+    let users = await usersServiceProvider.getUsers({query, skip, limit, sort, projection})
+
+    users.forEach(user => {
+      formattedUsers.push({
+        id: user.id,
+        user_type: user.user_type,
+        email: user.email,
+        name: user.name,
+        department: user.department,
+        salary: user.salary
+      })
+    })
+
+    const csvField = ['Id', 'User Type', 'Email', 'Name', 'Department', 'Salary (Rs)']
+    const csvParser = new CsvParser({ csvField })
+    const csvData = csvParser.parse(formattedUsers.length ? formattedUsers : [{}])
+
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment: filename=employees.csv');
+
+    return res.status(200).end(csvData)
 
   } catch (error) {
     next(error)

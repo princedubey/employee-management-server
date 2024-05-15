@@ -1,4 +1,4 @@
-const { signUp, logIn, getEmployees, insertEmployees, updateEmployee, logOut } = require('../controller/users-controller')
+const { signUp, logIn, getEmployees, insertEmployees, updateEmployee, logOut, exportCsvEmployees } = require('../controller/users-controller')
 const { validateAccessToken } = require('../middleware/auth-middleware')
 const { parseFilterParams, adminValidation, schemaValidation } = require('../middleware/custom-validation')
 const { signupSchema, loginSchema, insertEmployeeSchema, listEmployeeSchema, updateEmployeeSchema } = require('../middleware/joi-validation')
@@ -43,6 +43,16 @@ router.get('/employees',
     parseFilterParams,
   ],
   getEmployees
+)
+
+router.get('/employees/csv-data',
+  [
+    validateAccessToken,
+    adminValidation,
+    schemaValidation(listEmployeeSchema),
+    parseFilterParams,
+  ],
+  exportCsvEmployees
 )
 
 router.patch('/employees/:id',
