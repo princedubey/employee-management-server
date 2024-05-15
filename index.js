@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const mysql = require('mysql2/promise')
 const routes = require('./src/router/users-route')
 const { connectToDatabase } = require('./src/database/connection')
 const errorHandler = require('./src/middleware/error-handler')
