@@ -5,7 +5,7 @@ exports.validateAccessToken = async (req, res, next) => {
   try {
     const accessToken = req.headers.authorization
     if (!accessToken) {
-      return res.status(406).json({ 
+      return res.status(409).json({ 
         message: 'Invalid Access Token!',
         error_code: 'INVALID_ACCESS_TOKEN'
       })
@@ -13,7 +13,7 @@ exports.validateAccessToken = async (req, res, next) => {
   
     jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        return res.status(406).json({ 
+        return res.status(409).json({ 
           message: 'Invalid Access Token!',
           error_code: 'INVALID_ACCESS_TOKEN'
         })
@@ -26,7 +26,7 @@ exports.validateAccessToken = async (req, res, next) => {
     const userId = req.user.id
     const user = await usersServiceProvider.getUserById(userId)
     if (accessToken !== user.access_token) {
-      return res.status(406).json({ 
+      return res.status(409).json({ 
         message: 'Invalid Access Token!',
         error_code: 'INVALID_ACCESS_TOKEN'
       })

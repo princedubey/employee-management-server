@@ -25,7 +25,7 @@ exports.adminValidation = async (req, res, next) => {
   const { user_type } = req.user
 
   if(user_type !== 'ADMIN') {
-    return res.status(406).json({ 
+    return res.status(409).json({ 
       message: 'Invalid Access!',
       error_code: 'INVALID_ACCESS'
     })

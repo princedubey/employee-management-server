@@ -9,14 +9,14 @@ exports.signUp = async (req, res, next) => {
 
     const isUserAlreadyExist = await usersServiceProvider.getUserByEmail(email)
     if (isUserAlreadyExist) {
-      return res.status(406).json({
+      return res.status(409).json({
         success: false,
         message: "Email already exists!" 
       })
     }
 
     if (password !== confirm_password) {
-      return res.status(406).json({ 
+      return res.status(409).json({ 
         success: false,
         message: "Password must be same for verification" 
       })
@@ -50,7 +50,7 @@ exports.logIn = async (req, res, next) => {
     let user = await usersServiceProvider.getUserByEmail(email)
 
     if (!user) {
-      return res.status(406).json({
+      return res.status(409).json({
         message: "Invalid Credentials",
         error_code: "INVALID_CREDENTIALS"
       })
@@ -58,7 +58,7 @@ exports.logIn = async (req, res, next) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) {
-      return res.status(406).json({
+      return res.status(409).json({
         message: "Invalid Credentials",
         error_code: "INVALID_CREDENTIALS"
       })
