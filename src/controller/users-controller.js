@@ -34,6 +34,7 @@ exports.signUp = async (req, res, next) => {
     delete userRegistered.password
 
     return res.status(200).json({
+      success: true,
       message: 'User registered successfully.',
       data: userRegistered
     })
