@@ -50,7 +50,7 @@ exports.logIn = async (req, res, next) => {
     let user = await usersServiceProvider.getUserByEmail(email)
 
     if (!user) {
-      return res.status(409).json({
+      return res.status(401).json({
         message: "Invalid Credentials",
         error_code: "INVALID_CREDENTIALS"
       })
@@ -58,7 +58,7 @@ exports.logIn = async (req, res, next) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) {
-      return res.status(409).json({
+      return res.status(401).json({
         message: "Invalid Credentials",
         error_code: "INVALID_CREDENTIALS"
       })
