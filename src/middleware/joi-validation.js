@@ -8,7 +8,6 @@ const signupSchema = Joi.object({
     .message('Password must be at least 8 characters contain one uppercase letter,one number and one special character.'),
   confirm_password: Joi.string().required().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
     .message('Password must be at least 8 characters contain one uppercase letter,one number and one special character.'),
-  user_type: Joi.string().valid('ADMIN', 'EMPLOYEE').required()
 })
 
 const loginSchema = Joi.object({
