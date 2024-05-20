@@ -17,10 +17,17 @@ exports.validateAccessToken = async (req, res, next) => {
 
     jwt.verify(accessToken, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {
-        return res.status(401).json({
-          message: 'Invalid Access Token!',
-          error_code: 'INVALID_ACCESS_TOKEN'
-        });
+        if (err.name === 'TokenExpiredError') {
+          return res.status(401).json({
+            message: 'Token expired',
+            error_code: 'TOKEN_EXPIRED'
+          });
+        } else {
+          return res.status(401).json({
+            message: 'Invalid Access Token!',
+            error_code: 'INVALID_ACCESS_TOKEN'
+          });
+        }
       }
 
       const userId = decoded.id;
