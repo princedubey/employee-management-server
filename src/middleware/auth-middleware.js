@@ -3,12 +3,16 @@ const usersServiceProvider = require('../services/users-service-provider');
 
 exports.validateAccessToken = async (req, res, next) => {
   try {
-    const accessToken = req.headers.authorization;
+    let accessToken = req.headers.authorization;
     if (!accessToken) {
       return res.status(401).json({
         message: 'Invalid Access Token!',
         error_code: 'INVALID_ACCESS_TOKEN'
       });
+    }
+
+    if (accessToken.startsWith('Bearer ')) {
+      accessToken = accessToken.slice(7)
     }
 
     jwt.verify(accessToken, process.env.JWT_SECRET, async (err, decoded) => {
