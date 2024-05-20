@@ -28,6 +28,7 @@ exports.signUp = async (req, res, next) => {
       name,
       user_type,
       password: hash,
+      user_type: 'ADMIN',
     }
 
     const userRegistered = await usersServiceProvider.signUp(newUser)
