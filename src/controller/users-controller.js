@@ -97,7 +97,7 @@ exports.logOut = async (req, res, next) => {
 
 exports.insertEmployees = async (req, res, next) => {
   try {
-    const employees = req.body
+    let employees = req.body
 
     if (!Array.isArray(employees)) {
       employees = [employees];
@@ -106,7 +106,7 @@ exports.insertEmployees = async (req, res, next) => {
     employees.forEach(elm => {
       return elm.user_type = 'EMPLOYEE'
     })
-    
+
     await usersServiceProvider.insertUsers(employees)
 
     return res.status(200).json({
